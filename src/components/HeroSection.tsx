@@ -1,13 +1,14 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Sphere, Box, Octahedron } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Users, TrendingUp } from 'lucide-react';
 import heroBackground from '@/assets/hero-bg.jpg';
+import * as THREE from 'three';
 
 function FloatingShape({ position, color, shape = 'sphere' }: { position: [number, number, number], color: string, shape?: string }) {
-  const ref = useRef<any>();
+  const ref = useRef<THREE.Mesh>(null);
   
   useFrame((state) => {
     if (ref.current) {
@@ -17,12 +18,29 @@ function FloatingShape({ position, color, shape = 'sphere' }: { position: [numbe
     }
   });
 
-  const ShapeComponent = shape === 'box' ? Box : shape === 'octahedron' ? Octahedron : Sphere;
+  if (shape === 'box') {
+    return (
+      <mesh ref={ref} position={position}>
+        <boxGeometry args={[0.8, 0.8, 0.8]} />
+        <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
+      </mesh>
+    );
+  }
+
+  if (shape === 'octahedron') {
+    return (
+      <mesh ref={ref} position={position}>
+        <octahedronGeometry args={[0.6]} />
+        <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
+      </mesh>
+    );
+  }
 
   return (
-    <ShapeComponent ref={ref} position={position} args={[0.5, 0.5, 0.5]}>
+    <mesh ref={ref} position={position}>
+      <sphereGeometry args={[0.5, 32, 32]} />
       <meshStandardMaterial color={color} metalness={0.8} roughness={0.2} />
-    </ShapeComponent>
+    </mesh>
   );
 }
 
