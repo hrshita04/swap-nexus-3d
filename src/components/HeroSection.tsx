@@ -2,6 +2,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Users, TrendingUp } from 'lucide-react';
 import heroBackground from '@/assets/hero-bg.jpg';
@@ -102,13 +103,17 @@ export default function HeroSection() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button variant="glow" size="lg" className="group">
-              Start Swapping Skills
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-gradient-primary hover:opacity-90 text-white shadow-glow" asChild>
+              <Link to="/home">
+                Start Your Skill Journey
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Link>
             </Button>
-            <Button variant="outline" size="lg" className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">
-              Explore Skills
+            <Button variant="outline" size="lg" className="bg-white/20 border-white/30 text-white hover:bg-white/30" asChild>
+              <Link to="/home">
+                Explore Skills
+              </Link>
             </Button>
           </div>
 
